@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titan Eye+ Centers Map</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div id="map"></div>
+
+    <script>
+        mapboxgl.accessToken = 'your-mapbox-access-token-here';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [77.5946, 12.9716], // Centering on Bengaluru
+            zoom: 10
+        });
+
+        const locations = [
+            {
+                coordinates: [77.639, 13.0206],
+                title: 'Titan Eye+ Kammanahalli (TBKH)',
+                address: '#4C, 3rd Block, HRBR Extension, opp. Jalvayu vihar, Kammanahalli, Bengaluru, Karnataka 560043',
+                phone: '080 4300 8194'
+            },
+            {
+                coordinates: [77.5784, 13.0297],
+                title: 'Titan Eye+ BEL Road (ISBE)',
+                address: 'Next to HP Petrol Bunk, 199, New BEL Rd, near Ramaiah Hospital Signal, Raj Mahal Vilas 2nd Stage, Bengaluru, Karnataka 560094',
+                phone: '080 2990 6121'
+            },
+            {
+                coordinates: [77.5854, 12.9263],
+                title: 'Titan Eye+ Jayanagar 4th Block (TBJA)',
+                address: 'No 39, Gopala Krishna, Arcade, 11th Main Rd, next to Kalaniketan, Geetha Colony, 4th T Block East, 4th Block, Jayanagar, Bengaluru, Karnataka 560011',
+                phone: '080 4121 9375'
+            },
+            {
+                coordinates: [77.5405, 12.9279],
+                title: 'Titan Eye+ Banashankari 3rd Stage (ISBS)',
+                address: '307, 100 feet Ring Road, Banashankari, 3rd Stage Diagonal, opp. Deve Gowda Petrol Bunk, next to Ujjivan Bank, 7th Block, Banashankari, Bengaluru, Karnataka 560085',
+                phone: '080 2669 0676'
+            }
+        ];
+
+        locations.forEach(location => {
+            const marker = new mapboxgl.Marker()
+                .setLngLat(location.coordinates)
+                .addTo(map);
+
+            const popupContent = `
+                <div class="p-4">
+                    <h3 class="text-lg font-bold">${location.title}</h3>
+                    <p>${location.address}</p>
+                    <p><strong>Phone:</strong> ${location.phone}</p>
+                    <button class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Register for Appointment Now</button>
+                </div>
+            `;
+
+            const popup = new mapboxgl.Popup({ offset: 25 })
+                .setHTML(popupContent);
+
+            marker.setPopup(popup);
+        });
+    </script>
+</body>
+</html>
